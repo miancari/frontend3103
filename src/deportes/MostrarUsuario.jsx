@@ -2,11 +2,35 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 //import styles from "*/styles.module.css";
+import { Table } from "react-bootstrap";
+import { FaTrashAlt, FaRegEdit, FaFileContract } from 'react-icons/fa';
+import { BsArrowsAngleContract, BsPlusCircleFill } from "react-icons/bs";
+import Swal from 'sweetalert2'
 
 const URI = 'http://localhost:8000/usuarios/mos_usuario/'
 const URI2 = 'http://localhost:8000/usuarios/borr_usuario/'
 
 export const CompMostrarUsuario = () => {
+    useEffect(() => {
+        falerta()
+    })
+    const falerta =() => {
+        Swal.fire("Este es un ejemplo de Alert")
+    }
+
+    //Aca inicia el código que envia el encabezado del token
+    const token1 = localStorage.getItem("auth")
+    const token = `${token1}`;
+    const beer = "Bearer"
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'accept': 'application/json',
+            'Authorization': `${beer} ${token}`,    
+        }
+    };
+
+    //aca finaliza
 
     const [users, setBlog] = useState([])
     useEffect( ()=> {
@@ -15,7 +39,7 @@ export const CompMostrarUsuario = () => {
 
     //procedimiento para mostrar los registros
     const getBlogs = async () => {
-        const res = await axios.get(URI)
+        const res = await axios.get(URI,axiosConfig)
         setBlog(res.data)
     }
 
@@ -26,16 +50,16 @@ export const CompMostrarUsuario = () => {
     }
 
     return(
-        <div className="">
-            <div className='row'>
-                <div className='col'>
-                    <Link to="/regusuario" className='btn btn-primary mt-2 mb-2'><i className="fas fa-plus"></i>Crear Usuario</Link>
-                    <table className="table">
+        <div>
+            <div>
+                <div>
+                    <Link to="/regusuario" className='btn btn-primary mt-2 mb-2'><BsPlusCircleFill  size = "35" color = "red" /></Link>
+                    <Table striped bordered hover size="sm">
                         <thead className='thead tr:first-child'>
                             <tr>
                                 <th>Nombre</th>
                                 <th>Correo</th>
-                                <th>Contraseña</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -43,17 +67,18 @@ export const CompMostrarUsuario = () => {
                                 <tr key={ blog._id}>
                                     <td> { blog.nom_usuario } </td>
                                     <td> { blog.correo } </td>
-                                    <td> { blog.contraseña } </td>
                                     <td> 
-                                        <Link to={`/editarusuario/${blog._id}`} className=''><i className="fas fa-edit"></i>Editar Usuario</Link>
-                                        <button onClick={ () => deleteBlog(blog._id) } className='btn btn-danger'><i className="fas fa-trash-alt"></i>Eliminar Usuario</button>
+                                        <Link to={`/editarusuario/${blog._id}`} className=''><FaRegEdit size = "30" color = "blue" /></Link>
+                                    </td>
+                                    <td>    
+                                        <button onClick={ () => deleteBlog(blog._id) } className='btn btn-danger'><FaTrashAlt /></button>
 
                                     </td>
                                 </tr>
                             ))}
                         </tbody>
 
-                    </table>
+                    </Table>
 
                 </div>
 

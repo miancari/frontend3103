@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 //import '../../src/style.css';
 //import '../style.css';
+import Swal from "sweetalert2";
 
 const URI = 'http://localhost:8000/usuarios/regusuario'
 
@@ -16,8 +17,23 @@ export const CompCrearUsuario = () => {
     //procedimiento guardar
     const store = async (e) => {
         e.preventDefault()
-        await axios.post(URI, {correo:correo, nom_usuario:nom_usuario, contraseña:contraseña})
-        navigate('/musuario')
+        Swal.fire({
+            title: 'Guardar Usuario',
+            text: 'Esta ud seguro de querer guardar los datos del usuario',
+            icon: 'success',
+            showDenyButton: true,
+            denyButtonText: "NO",
+            confirmButtonText: "SI"
+
+        }).then ( response => {
+                 if (response.isConfirmed){
+                     axios.post(URI, {correo:correo, nom_usuario: nom_usuario , contraseña: contraseña})
+                    Swal.fire("Los datos fueron almacenados con exito")
+                     navigate('/mos_usuario')
+                 } else {
+                    Swal.fire("la información no fue almacenada")
+                 }
+        })
     }
 
     return(
@@ -31,6 +47,7 @@ export const CompCrearUsuario = () => {
                             value={nom_usuario}
                             onChange={ (e)=> setUsuario(e.target.value)}
                             type="text"
+                            className="form-control"
                             placeholder="Ingrese su nombre"
                         />    
                 </div>
@@ -40,6 +57,7 @@ export const CompCrearUsuario = () => {
                         value={correo}
                         onChange={ (e)=> setContent(e.target.value)}
                         type="email"
+                        className="form-control"
                         placeholder="Correo"
                     /> 
 

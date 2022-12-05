@@ -18,7 +18,7 @@ export const ComEditarEvento = () => {
 
     //Procedimiento para actualizar
 
-    const onSubmit = async (e) => {
+    const update = async (e) => {
         e.preventDefault()
         await axios.put(URI2+id, {
             fecha: fecha,
@@ -28,7 +28,7 @@ export const ComEditarEvento = () => {
             marcador2: marcador2,
             t_evento: t_evento
         })
-        navigate('/mevento')
+        navigate('/mos_evento')
     }
 
     const getBlogById = async () => {
@@ -48,7 +48,7 @@ export const ComEditarEvento = () => {
     return(
         <div>
             <h3>Editar Evento</h3>
-            <form>
+            <form onSubmit={update}>
 
                 <div>
                     <label>Fecha</label>
@@ -104,7 +104,7 @@ export const ComEditarEvento = () => {
                     />
                 </div>
 
-                <button type="submit" onClick={onSubmit}>Actualizar</button>
+                <button type="submit">Actualizar</button>
 
             </form>
         </div>

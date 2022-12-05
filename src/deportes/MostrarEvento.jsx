@@ -1,6 +1,9 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { FaTrashAlt, FaRegEdit } from 'react-icons/fa';
+import { BsPlusCircleFill } from "react-icons/bs";
+
 //import styles from "*/styles.module.css";
 
 //Importamos la ruta para mostrar los eventos deportivos
@@ -10,6 +13,21 @@ const URI2 = 'http://localhost:8000/usuarios/borr_evento/'
 
 export const CompMostrarevento = () => {
 
+    //Aca inicia el código que envia el encabezado del Token
+    const token1 = localStorage.getItem("auth")
+    const token = `${token1}`;
+    const beer = "Bearer"
+    let axiosConfig = {
+        headers: {
+            'Content-Type': 'application/json;charset=UTF-8',
+            'accept': 'application/json',
+          //'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2Njk0NjcxMzgsImV4cCI6MTY2OTQ2ODkzOH0.Dp0FfAN_taNOtPRhOGeAB7nQZvMvzVddPhN4TKb3JJo',
+         'Authorization': `${beer} ${token}`,
+        }
+    };
+
+    //aca finaliza
+
     const [ceventos, setBlog] = useState([])
     useEffect( ()=> {
         getBlogs()
@@ -18,7 +36,7 @@ export const CompMostrarevento = () => {
     //procedimiento para mostrar los registros
 
     const getBlogs = async () => {
-        const res = await axios.get(URI)
+        const res = await axios.get(URI,axiosConfig)
         setBlog(res.data)
     }
 
@@ -32,7 +50,7 @@ export const CompMostrarevento = () => {
         <div className="">
             <div className='row'>
                 <div className='col'>
-                    <Link to="/regevento" className='btn btn-primary mt-2 mb-2'><i className="fas fa-plus"></i>Crear Evento</Link>
+                    <Link to="/regevento" className='btn btn-primary mt-2 mb-2'><i className="fas fa-plus"></i><BsPlusCircleFill  size = "35" color = "red" /></Link>
                     <table className="table">
                         <thead className='thead tr:first-child'>
                             <tr>
@@ -55,8 +73,10 @@ export const CompMostrarevento = () => {
                                     <td> { blog.t_evento } </td>
                                     <td> 
 
-                                        <Link to={`/editarevento/${blog._id}`} className=''><i className="fas fa-edit"></i>Editar Evento</Link>
-                                        <button onClick={ () => deleteBlog(blog._id) } className='btn btn-danger'><i className="fas fa-trash-alt"></i>Eliminar</button>
+                                        <Link to={`/editarevento/${blog._id}`} className=''><FaRegEdit size = "30" color = "blue" /></Link>
+                                    </td>
+                                    <td>
+                                        <button onClick={ () => deleteBlog(blog._id) } className='btn btn-danger'><FaTrashAlt /></button>
 
                                     </td>
                                 </tr>

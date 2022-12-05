@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
-const URI = 'http://localhost:8000/usuarios/muser/'
+const URI = 'http://localhost:8000/usuarios/mos_usuario/'
 const URI2 = 'http://localhost:8000/usuarios/act_usuario/'
 
 export const CompEditarUsuario = () => {
@@ -22,7 +22,7 @@ export const CompEditarUsuario = () => {
             correo: correo,
             contraseña: contraseña
         })
-        navigate('/musuario')
+        navigate('/mos_usuario')
     }
 
     const getBlogById = async () => {
