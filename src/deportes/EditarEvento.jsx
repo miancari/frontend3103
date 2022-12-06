@@ -28,7 +28,7 @@ export const ComEditarEvento = () => {
             marcador2: marcador2,
             t_evento: t_evento
         })
-        navigate('/mos_evento')
+        navigate('/mevento')
     }
 
     const getBlogById = async () => {

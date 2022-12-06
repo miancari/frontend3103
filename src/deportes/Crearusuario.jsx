@@ -29,7 +29,7 @@ export const CompCrearUsuario = () => {
                  if (response.isConfirmed){
                      axios.post(URI, {correo:correo, nom_usuario: nom_usuario , contraseña: contraseña})
                     Swal.fire("Los datos fueron almacenados con exito")
-                     navigate('/mos_usuario')
+                     navigate('/musuario')
                  } else {
                     Swal.fire("la información no fue almacenada")
                  }

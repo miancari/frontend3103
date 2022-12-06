@@ -22,7 +22,7 @@ export const CompCreateEvento = () => {
     const store = async (e) => {
         e.preventDefault()
         await axios.post(URI, {fecha:fecha, equipo1:equipo1, equipo2:equipo2, marcador1:marcador1, marcador2:marcador2, t_evento:t_evento })
-        navigate('/mos_evento')
+        navigate('/mevento')
     }
 
     return(
